@@ -1,0 +1,7 @@
+package: github.com/tingtingyang/golang_web_server_push
+import:
+- package: github.com/MoonighT/elastic
+- package: github.com/prometheus/client_golang
+  subpackages:
+  - prometheus
+  - prometheus/push

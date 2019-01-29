@@ -1,0 +1,42 @@
+hash: db1828af52aee923b6af6eb3a197655804cf858845d1358fd4c4ed07928d4015
+updated: 2019-01-29T10:56:09.145413351+08:00
+imports:
+- name: github.com/beorn7/perks
+  version: 4c0e84591b9aa9e6dcfdf3e020114cd81f89d5f9
+  subpackages:
+  - quantile
+- name: github.com/golang/protobuf
+  version: 9eb2c01ac278a5d89ce4b2be68fe4500955d8179
+  subpackages:
+  - proto
+- name: github.com/matttproud/golang_protobuf_extensions
+  version: c12348ce28de40eed0136aa2b644d0ee0650e56c
+  subpackages:
+  - pbutil
+- name: github.com/MoonighT/elastic
+  version: 7a92d18eaf7a9f95d603e70970fb5adcd4dc62f1
+- name: github.com/prometheus/client_golang
+  version: 180b8fdc22b4ea7750bcb43c925277654a1ea2f3
+  subpackages:
+  - prometheus
+  - prometheus/push
+- name: github.com/prometheus/client_model
+  version: 99fa1f4be8e564e8a6b613da7fa6f46c9edafc6c
+  subpackages:
+  - go
+- name: github.com/prometheus/common
+  version: 89604d197083d4781071d3c65855d24ecfb0a563
+  subpackages:
+  - expfmt
+  - internal/bitbucket.org/ww/goautoneg
+  - model
+- name: github.com/prometheus/procfs
+  version: b15cd069a83443be3154b719d0cc9fe8117f09fb
+  subpackages:
+  - xfs
+- name: gopkg.in/olivere/elastic.v3
+  version: b3b762ecb4a4acb9dafd3e0de5ba597a117c83f8
+  subpackages:
+  - backoff
+  - uritemplates
+testImports: []
