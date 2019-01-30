@@ -1,6 +1,7 @@
 package monitor
 
 import (
+	"context"
 	"encoding/json"
 	"log"
 	"net/http"
@@ -73,8 +74,10 @@ func ESQuery(es *elastic.Client, index string, typ string, query elastic.Query) 
 		Index(index).
 		Type(typ).
 		Query(query).
-		Size(1).
-		Do()
+		From(0).
+		Size(10).
+		Sort("line_id", true).
+		Do(context.Background())
 
 	duration := time.Since(start)
 
