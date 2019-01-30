@@ -6,14 +6,14 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/MoonighT/elastic"
-	"github.com/tingtingyang/golang_web_server_push/monitor"
+	"github.com/olivere/elastic"
+	"github.com/yangtinngting/golang_web_server_push/monitor"
 )
 
 func main() {
 
 	http.HandleFunc("/", monitor.Monitor(SayHello))
-	http.HandleFunc("/queryES", monitor.Monitor(SearchLineInES([]string{"http://localhost:9200"}...)))
+	http.HandleFunc("/queryES", monitor.Monitor(SearchLineByKeyword("http://localhost:9200")))
 	http.HandleFunc("/sleep", monitor.Monitor(Sleep))
 
 	http.ListenAndServe(":8080", nil)
@@ -24,8 +24,8 @@ func SayHello(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, "hello world")
 }
 
-// SearchLineInES ...
-func SearchLineInES(urls ...string) http.HandlerFunc {
+// SearchLineByKeyword search shakespeare book by keyword, and return the top10 sorted by line id.
+func SearchLineByKeyword(urls ...string) http.HandlerFunc {
 	// lazy load elasticsearch
 	es, err := elastic.NewClient(elastic.SetURL(urls...))
 	if err != nil {
@@ -45,14 +45,14 @@ func SearchLineInES(urls ...string) http.HandlerFunc {
 	*/
 
 	return func(w http.ResponseWriter, r *http.Request) {
-
-		query := elastic.NewMatchQuery("text_entry", "to be or not to be")
+		keyword := r.URL.Query().Get("keyword")
+		query := elastic.NewMatchQuery("text_entry", keyword)
 		bytes, err := monitor.ESQuery(es, "shakespeare", "doc", query)
 		if err != nil {
 			http.Error(w, "internal failure", 500)
 		} else {
 			w.Header().Set("Content-Type", "application/json; charset=utf-8")
-			fmt.Fprint(w, bytes)
+			fmt.Fprint(w, string(bytes))
 		}
 
 	}

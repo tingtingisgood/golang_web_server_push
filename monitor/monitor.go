@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/MoonighT/elastic"
+	"github.com/olivere/elastic"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/push"
 )
@@ -48,23 +48,16 @@ var esRequestCount = prometheus.NewCounterVec(
 	[]string{"query"},
 )
 
-func init() {
-	// register exposed metrics
-	prometheus.MustRegister(webRequestDuration)
-	prometheus.MustRegister(webRequestCount)
-
-	prometheus.MustRegister(esRequestDuration)
-	prometheus.MustRegister(esRequestCount)
-}
-
 // Monitor ...
 func Monitor(h http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
 		h(w, r)
 		duration := time.Since(start)
+
 		webRequestCount.With(prometheus.Labels{"method": r.Method, "endpoint": r.URL.Path}).Inc()
 		webRequestDuration.With(prometheus.Labels{"method": r.Method, "endpoint": r.URL.Path}).Observe(duration.Seconds())
+
 		// push webRequestCount and webRequestDuration to pushgateway.
 		if err := push.Collectors(jobName, push.HostnameGroupingKey(), gatewayURL, webRequestCount, webRequestDuration); err != nil {
 			log.Printf("can not push webRequestCount and webRequestDuration to pushgateway: %s", err)
@@ -95,6 +88,7 @@ func ESQuery(es *elastic.Client, index string, typ string, query elastic.Query) 
 		if ee == nil {
 			esRequestCount.With(prometheus.Labels{"query": string(bytes)}).Inc()
 			esRequestDuration.With(prometheus.Labels{"query": string(bytes)}).Observe(duration.Seconds())
+
 			// push esRequestCount and esRequestDuration to pushgateway.
 			if err := push.Collectors(jobName, push.HostnameGroupingKey(), gatewayURL, esRequestCount, esRequestDuration); err != nil {
 				log.Printf("can not push esRequestCount and esRequestDuration to pushgateway: %s", err)
