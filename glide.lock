@@ -1,5 +1,5 @@
-hash: db1828af52aee923b6af6eb3a197655804cf858845d1358fd4c4ed07928d4015
-updated: 2019-01-29T10:56:09.145413351+08:00
+hash: c13a47ef87f558bcebb8f57b018470877ec2f2079406a8c1eecbed7ee3300857
+updated: 2019-01-30T17:23:30.335906949+08:00
 imports:
 - name: github.com/beorn7/perks
   version: 4c0e84591b9aa9e6dcfdf3e020114cd81f89d5f9
@@ -9,12 +9,23 @@ imports:
   version: 9eb2c01ac278a5d89ce4b2be68fe4500955d8179
   subpackages:
   - proto
+- name: github.com/mailru/easyjson
+  version: 60711f1a8329503b04e1c88535f419d0bb440bff
+  subpackages:
+  - buffer
+  - jlexer
+  - jwriter
 - name: github.com/matttproud/golang_protobuf_extensions
   version: c12348ce28de40eed0136aa2b644d0ee0650e56c
   subpackages:
   - pbutil
-- name: github.com/MoonighT/elastic
-  version: 7a92d18eaf7a9f95d603e70970fb5adcd4dc62f1
+- name: github.com/olivere/elastic
+  version: 2220b205e6d33a5752daed9b63dbb51b40c5e364
+  subpackages:
+  - config
+  - uritemplates
+- name: github.com/pkg/errors
+  version: ffb6e22f01932bf7ac35e0bad9be11f01d1c8685
 - name: github.com/prometheus/client_golang
   version: 180b8fdc22b4ea7750bcb43c925277654a1ea2f3
   subpackages:
@@ -34,9 +45,4 @@ imports:
   version: b15cd069a83443be3154b719d0cc9fe8117f09fb
   subpackages:
   - xfs
-- name: gopkg.in/olivere/elastic.v3
-  version: b3b762ecb4a4acb9dafd3e0de5ba597a117c83f8
-  subpackages:
-  - backoff
-  - uritemplates
 testImports: []
