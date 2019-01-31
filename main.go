@@ -16,7 +16,7 @@ func main() {
 	http.HandleFunc("/queryES", monitor.Monitor(SearchLineByKeyword("http://localhost:9200")))
 	http.HandleFunc("/sleep", monitor.Monitor(Sleep))
 
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":8081", nil)
 }
 
 // SayHello ...
